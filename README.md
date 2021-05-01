@@ -83,7 +83,7 @@ source activate graphgym
 Install [PyTorch](https://pytorch.org/). 
 We have verified under PyTorch 1.4.0 and torchvision 0.5.0. For example:
 ```bash
-pip install torch==1.4.0 torchvision==0.5.0
+pip install torch==1.7.0 
 ```
 
 **3. Pytorch Geometric:**
@@ -92,12 +92,19 @@ follow their instructions. For example:
 ```bash
 # CUDA versions: cpu, cu92, cu101, cu102, cu110
 # TORCH versions: 1.4.0, 1.5.0, 1.6.0, 1.7.0
-CUDA=cu101
-TORCH=1.4.0
-pip install torch-scatter==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-${TORCH}.html
-pip install torch-sparse==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-${TORCH}.html
-pip install torch-cluster==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-${TORCH}.html
-pip install torch-spline-conv==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-${TORCH}.html
+#CUDA=cu101
+#TORCH=1.4.0
+#pip install torch-scatter==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-${TORCH}.html
+#pip install torch-sparse==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-${TORCH}.html
+#pip install torch-cluster==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-${TORCH}.html
+#pip install torch-spline-conv==latest+${CUDA} -f https://pytorch-geometric.com/whl/torch-${TORCH}.html
+#pip install torch-geometric
+python -c "import torch; print(torch.__version__)"
+python -c "import torch; print(torch.version.cuda)"
+pip install torch-scatter -f https://pytorch-geometric.com/whl/torch-1.7.0+cu102.html
+pip install torch-sparse -f https://pytorch-geometric.com/whl/torch-1.7.0+cu102.html
+pip install torch-cluster -f https://pytorch-geometric.com/whl/torch-1.7.0+cu102.html
+pip install torch-spline-conv -f https://pytorch-geometric.com/whl/torch-1.7.0+cu102.html
 pip install torch-geometric
 ```
 
@@ -127,6 +134,14 @@ The experiment is about node classification on Cora dataset (random 80/20 train/
 ```bash
 cd run
 bash run_single.sh
+
+# Error: Cuda driver not nvidia-smi not found. please check if you have nvidia driver install
+#Resolution:
+#Refer url https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&=RHEL&target_version=7&target_type=rpm_network
+sudo yum-config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-rhel7.repo
+sudo yum clean all
+sudo yum -y install nvidia-driver-latest-dkms cuda
+sudo yum -y install cuda-drivers
 ```
 
 ## GraphGym Usage
